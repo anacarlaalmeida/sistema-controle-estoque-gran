@@ -72,3 +72,17 @@ Aplicação web desenvolvida em **React.js** (com **Vite**) para gerenciamento c
    http://localhost:5173
    ```
 
+---
+
+## Executando os Testes Automatizados
+
+Instale as dependências do frontend e execute os testes de componentes e interação com Vitest, Testing Library e jsdom:
+
+```bash
+cd frontend
+npm install
+npm test
+```
+
+Os testes cobrem os campos e mensagens de cadastro de fornecedores e produtos, categoria personalizada e envio de imagem, detalhes do produto e os fluxos de associação, duplicidade e desassociação de fornecedores.
+

@@ -65,7 +65,7 @@ test('Fornecedor - Cenário 1 (Sucesso): Cadastrar fornecedor válido', async ()
 test('Fornecedor - Cenário 2 (CNPJ Duplicado): Bloquear cadastro duplicado', async () => {
   const dados = {
     nome_empresa: 'Outra Empresa Ltda',
-    cnpj: '11.222.333/0001-81', // mesmo CNPJ
+    cnpj: '11222333000181', // mesmo CNPJ sem máscara
     endereco: 'Rua Central, 50',
     telefone: '(11) 2222-3333',
     email: 'outro@empresa.com',
@@ -117,7 +117,7 @@ test('Fornecedor - CRUD: Listar, Buscar por ID, Atualizar e Excluir', async () =
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       nome_empresa: 'Beta Suprimentos',
-      cnpj: '72.338.463/0001-34',
+      cnpj: '72.338.463/0001-79',
       endereco: 'Rua do Comércio, 200',
       telefone: '(21) 98765-4321',
       email: 'contato@betasuprimentos.com',
@@ -145,7 +145,7 @@ test('Fornecedor - CRUD: Listar, Buscar por ID, Atualizar e Excluir', async () =
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       nome_empresa: 'Beta Suprimentos Atualizada',
-      cnpj: '72.338.463/0001-34',
+      cnpj: '72.338.463/0001-79',
       endereco: 'Nova Rua, 300',
       telefone: '(21) 98765-4321',
       email: 'contato@betasuprimentos.com',

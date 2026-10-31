@@ -30,7 +30,7 @@ API RESTful desenvolvida em **Node.js**, **Express** e **SQLite** para o gerenci
 - **SQLite3** (Banco de dados relacional embarcado)
 - **Multer** (Middleware `multipart/form-data` para upload de imagens de produtos)
 - **CORS** (Habilitação de requisições cross-origin para integração com o Frontend React)
-- **Node Test Runner (`node --test`)** (Testes automatizados de integração cobrindo todos os cenários de negócio)
+- **Node Test Runner (`node --test`)** (Testes unitários de validação e testes de integração HTTP)
 
 ---
 
@@ -56,7 +56,8 @@ backend/
 │   └── upload.js                  # Configuração do Multer para armazenamento em /uploads
 ├── uploads/                       # Diretório onde as imagens enviadas dos produtos são salvas
 └── test/
-    └── api.test.js                # Suíte de testes automatizados dos 3 controladores
+  ├── api.test.js                # Testes HTTP dos controladores, CRUD e associação N:N
+  └── validators.test.js         # Testes unitários das regras de validação
 ```
 
 ---
@@ -121,12 +122,14 @@ O banco de dados SQLite inicializa automaticamente três tabelas ao subir a apli
 
 ## Executando os Testes Automatizados
 
-O projeto conta com testes automatizados que utilizam um banco SQLite em memória (`:memory:`) para validar todos os cenários exigidos no documento de requisitos:
+O projeto conta com testes unitários para as validações de fornecedor e produto, além de testes de integração HTTP para os cenários da API. Os testes de API usam um banco SQLite em memória (`:memory:`), sem modificar o banco de desenvolvimento.
 
 ```bash
 cd backend
 npm test
 ```
+
+O comando executa todos os arquivos `test/*.test.js` com o Node Test Runner. `api.test.js` cobre os fluxos HTTP, incluindo CRUD e associação N:N; `validators.test.js` cobre campos obrigatórios, formatos de CNPJ/e-mail/telefone, quantidade em estoque, código de barras e data de validade.
 
 ---
 

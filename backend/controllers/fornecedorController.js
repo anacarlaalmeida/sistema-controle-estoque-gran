@@ -1,6 +1,10 @@
 const db = require('../database/db');
 const { validateFornecedor } = require('../utils/validators');
 
+function normalizeCnpj(cnpj) {
+  return cnpj.replace(/\D/g, '');
+}
+
 const fornecedorController = {
   async listar(req, res) {
     try {
@@ -48,7 +52,11 @@ const fornecedorController = {
       }
 
       // Verificação de CNPJ duplicado
-      const fornecedorExistente = await db.get('SELECT id FROM fornecedores WHERE cnpj = ?', [cnpj.trim()]);
+      const fornecedorExistente = await db.get(
+        `SELECT id FROM fornecedores
+         WHERE REPLACE(REPLACE(REPLACE(cnpj, '.', ''), '/', ''), '-', '') = ?`,
+        [normalizeCnpj(cnpj)]
+      );
       if (fornecedorExistente) {
         return res.status(400).json({
           mensagem: 'Fornecedor com esse CNPJ já está cadastrado!',
@@ -102,8 +110,12 @@ const fornecedorController = {
       }
 
       // Se alterou o CNPJ, verifica se outro fornecedor já possui
-      if (cnpj.trim() !== fornecedorAtual.cnpj) {
-        const duplicado = await db.get('SELECT id FROM fornecedores WHERE cnpj = ? AND id != ?', [cnpj.trim(), id]);
+      if (normalizeCnpj(cnpj) !== normalizeCnpj(fornecedorAtual.cnpj)) {
+        const duplicado = await db.get(
+          `SELECT id FROM fornecedores
+           WHERE REPLACE(REPLACE(REPLACE(cnpj, '.', ''), '/', ''), '-', '') = ? AND id != ?`,
+          [normalizeCnpj(cnpj), id]
+        );
         if (duplicado) {
           return res.status(400).json({
             mensagem: 'Fornecedor com esse CNPJ já está cadastrado!',
