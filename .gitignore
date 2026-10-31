@@ -1,0 +1,13 @@
+node_modules/
+**/node_modules/
+.env
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+dist/
+build/
+backend/uploads/*
+!backend/uploads/.gitkeep
+.DS_Store
+TODO.md
+orientacoes/

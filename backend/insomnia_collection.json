@@ -1,0 +1,436 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-10-31T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_gran_estoque",
+      "parentId": null,
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "name": "Gran Estoque - Controle de Estoque",
+      "description": "Coleção de testes de API do Projeto Integrador Full Stack",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_gran_estoque",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000"
+      },
+      "dataPropertyOrder": {
+        "&": ["base_url"]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1698700000000,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_fornecedores",
+      "parentId": "wrk_gran_estoque",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "name": "1. Fornecedores",
+      "description": "Rotas e cenários de testes do Controlador de Fornecedores",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -100,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_forn_cenario1",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores",
+      "name": "Cenário 1: Cadastrar Fornecedor (Sucesso)",
+      "description": "Cadastra fornecedor válido e retorna 'Fornecedor cadastrado com sucesso!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome_empresa\": \"Distribuidora Alfa Ltda\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"endereco\": \"Av. Central, 1000 - Centro, São Paulo - SP\",\n  \"telefone\": \"(11) 3333-4444\",\n  \"email\": \"contato@distribuidoraalfa.com\",\n  \"contato_principal\": \"Carlos Pereira\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -100,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_cenario2",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores",
+      "name": "Cenário 2: Cadastrar Fornecedor (CNPJ Duplicado)",
+      "description": "Tenta cadastrar CNPJ já existente e bloqueia com 'Fornecedor com esse CNPJ já está cadastrado!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome_empresa\": \"Outra Empresa Ltda\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"endereco\": \"Rua das Flores, 50\",\n  \"telefone\": \"(11) 2222-3333\",\n  \"email\": \"outra@empresa.com\",\n  \"contato_principal\": \"Maria Santos\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -90,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_cenario3",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores",
+      "name": "Cenário 3: Cadastrar Fornecedor (Dados Inválidos)",
+      "description": "Tenta cadastrar com campos em branco ou inválidos e retorna lista de erros correspondentes.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome_empresa\": \"\",\n  \"cnpj\": \"123\",\n  \"endereco\": \"\",\n  \"telefone\": \"\",\n  \"email\": \"email-invalido\",\n  \"contato_principal\": \"\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -80,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_listar",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores",
+      "name": "Listar Todos os Fornecedores",
+      "description": "Retorna lista de todos os fornecedores cadastrados",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -70,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_buscar",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores/1",
+      "name": "Buscar Fornecedor por ID",
+      "description": "Busca detalhes de um fornecedor pelo seu ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -60,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_atualizar",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores/1",
+      "name": "Atualizar Fornecedor",
+      "description": "Atualiza dados de um fornecedor cadastrado",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome_empresa\": \"Distribuidora Alfa S/A\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"endereco\": \"Av. Central, 1200 - Centro, São Paulo - SP\",\n  \"telefone\": \"(11) 3333-9999\",\n  \"email\": \"atendimento@distribuidoraalfa.com\",\n  \"contato_principal\": \"Carlos Pereira Atualizado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -50,
+      "_type": "request"
+    },
+    {
+      "_id": "req_forn_excluir",
+      "parentId": "fld_fornecedores",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores/1",
+      "name": "Excluir Fornecedor",
+      "description": "Exclui um fornecedor pelo ID",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -40,
+      "_type": "request"
+    },
+    {
+      "_id": "fld_produtos",
+      "parentId": "wrk_gran_estoque",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "name": "2. Produtos",
+      "description": "Rotas e cenários de testes do Controlador de Produtos",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 0,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_prod_cenario1",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos",
+      "name": "Cenário 1: Cadastrar Produto (Sucesso)",
+      "description": "Cadastra produto válido e retorna 'Produto cadastrado com sucesso!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Teclado Mecânico RGB\",\n  \"codigo_barras\": \"7891234567890\",\n  \"descricao\": \"Teclado mecânico gamer switch azul com iluminação RGB\",\n  \"quantidade_estoque\": 25,\n  \"categoria\": \"Eletrônicos\",\n  \"data_validade\": \"2029-12-31\",\n  \"imagem\": null\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -100,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_cenario2",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos",
+      "name": "Cenário 2: Cadastrar Produto (Código de Barras Duplicado)",
+      "description": "Tenta cadastrar código de barras já existente e bloqueia com 'Produto com este código de barras já está cadastrado!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Outro Teclado\",\n  \"codigo_barras\": \"7891234567890\",\n  \"descricao\": \"Descrição do segundo produto\",\n  \"quantidade_estoque\": 10,\n  \"categoria\": \"Eletrônicos\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -90,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_cenario3",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos",
+      "name": "Cenário 3: Cadastrar Produto (Dados Inválidos)",
+      "description": "Tenta cadastrar com campos obrigatórios em branco e valida mensagens de erro.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"\",\n  \"codigo_barras\": \"\",\n  \"descricao\": \"\",\n  \"quantidade_estoque\": -5,\n  \"categoria\": \"\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -80,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_listar",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos",
+      "name": "Listar Todos os Produtos",
+      "description": "Retorna todos os produtos do estoque",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -70,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_buscar",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1",
+      "name": "Buscar Produto por ID",
+      "description": "Retorna o produto e seus fornecedores vinculados",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -60,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_atualizar",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1",
+      "name": "Atualizar Produto",
+      "description": "Atualiza dados de um produto",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Teclado Mecânico RGB Pro\",\n  \"codigo_barras\": \"7891234567890\",\n  \"descricao\": \"Versão Pro com switches hot-swap e iluminação RGB\",\n  \"quantidade_estoque\": 40,\n  \"categoria\": \"Eletrônicos\",\n  \"data_validade\": null\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -50,
+      "_type": "request"
+    },
+    {
+      "_id": "req_prod_excluir",
+      "parentId": "fld_produtos",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1",
+      "name": "Excluir Produto",
+      "description": "Exclui um produto do estoque",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -40,
+      "_type": "request"
+    },
+    {
+      "_id": "fld_associacao",
+      "parentId": "wrk_gran_estoque",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "name": "3. Associação Produto x Fornecedor",
+      "description": "Rotas e cenários de associação muitos-para-muitos (N:N)",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 100,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_assoc_cenario1",
+      "parentId": "fld_associacao",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1/fornecedores",
+      "name": "Cenário 1: Associar Fornecedor a Produto (Sucesso)",
+      "description": "Vincula fornecedor ao produto e retorna 'Fornecedor associado com sucesso ao produto!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fornecedor_id\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -100,
+      "_type": "request"
+    },
+    {
+      "_id": "req_assoc_cenario2",
+      "parentId": "fld_associacao",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1/fornecedores",
+      "name": "Cenário 2: Associar Fornecedor Já Associado (Duplicado)",
+      "description": "Tenta associar o mesmo fornecedor novamente e bloqueia com 'Fornecedor já está associado a este produto!'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fornecedor_id\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": -90,
+      "_type": "request"
+    },
+    {
+      "_id": "req_assoc_listar_forn_prod",
+      "parentId": "fld_associacao",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1/fornecedores",
+      "name": "Listar Fornecedores do Produto",
+      "description": "Lista todos os fornecedores vinculados ao produto especificado",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -80,
+      "_type": "request"
+    },
+    {
+      "_id": "req_assoc_listar_prod_forn",
+      "parentId": "fld_associacao",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/fornecedores/1/produtos",
+      "name": "Listar Produtos do Fornecedor",
+      "description": "Lista todos os produtos vinculados ao fornecedor especificado",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -70,
+      "_type": "request"
+    },
+    {
+      "_id": "req_assoc_cenario3",
+      "parentId": "fld_associacao",
+      "modified": 1698700000000,
+      "created": 1698700000000,
+      "url": "{{ _.base_url }}/produtos/1/fornecedores/1",
+      "name": "Cenário 3: Desassociar Fornecedor de Produto (Sucesso)",
+      "description": "Remove o vínculo entre fornecedor e produto e retorna 'Fornecedor desassociado com sucesso!'",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "metaSortKey": -60,
+      "_type": "request"
+    }
+  ]
+}
