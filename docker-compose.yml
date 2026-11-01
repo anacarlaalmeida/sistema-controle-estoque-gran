@@ -5,6 +5,12 @@ services:
       - "3000:8080"
     environment:
       PORT: 8080
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
     volumes:
       - backend-database:/usr/src/app/database
       - backend-uploads:/usr/src/app/uploads
@@ -19,7 +25,8 @@ services:
       - ./frontend:/app
       - frontend-node-modules:/app/node_modules
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
 volumes:
   backend-database:
