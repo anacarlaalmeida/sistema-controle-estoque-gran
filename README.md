@@ -60,3 +60,24 @@ npm install
 npm start
 ```
 A aplicação React estará disponível em `http://localhost:5173/`.
+
+### Opção 2: aplicação completa com Docker Compose
+
+Na raiz do projeto, execute:
+
+```bash
+docker compose up --build
+```
+
+A aplicação ficará disponível em `http://localhost:5173/` e a API em
+`http://localhost:3000/`. O Compose sobe o frontend e o backend, mantendo o
+banco SQLite e os uploads em volumes Docker.
+
+Para encerrar os serviços, pressione `Ctrl+C` e execute:
+
+```bash
+docker compose down
+```
+
+Esse comando preserva os volumes de dados. Para iniciar novamente sem
+reconstruir as imagens, use `docker compose up`.
