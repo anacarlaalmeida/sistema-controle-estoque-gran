@@ -1,22 +1,51 @@
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
 
 const DB_PATH = process.env.NODE_ENV === 'test'
   ? ':memory:'
   : path.resolve(__dirname, 'database.sqlite');
 
+let sqlite3 = null;
+try {
+  sqlite3 = require('sqlite3').verbose();
+} catch {
+  sqlite3 = null;
+}
+
 let dbInstance = null;
+let usingNativeNodeSqlite = false;
 
 function getDb() {
   if (!dbInstance) {
-    dbInstance = new sqlite3.Database(DB_PATH);
-    dbInstance.run('PRAGMA foreign_keys = ON;');
+    if (sqlite3) {
+      dbInstance = new sqlite3.Database(DB_PATH);
+      dbInstance.run('PRAGMA foreign_keys = ON;');
+      usingNativeNodeSqlite = false;
+    } else {
+      const { DatabaseSync } = require('node:sqlite');
+      dbInstance = new DatabaseSync(DB_PATH);
+      dbInstance.exec('PRAGMA foreign_keys = ON;');
+      usingNativeNodeSqlite = true;
+    }
   }
   return dbInstance;
 }
 
 function run(sql, params = []) {
   const db = getDb();
+  if (usingNativeNodeSqlite) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(sql);
+        const result = stmt.run(...params);
+        resolve({
+          id: Number(result.lastInsertRowid),
+          changes: Number(result.changes),
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
   return new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
       if (err) return reject(err);
@@ -27,6 +56,17 @@ function run(sql, params = []) {
 
 function get(sql, params = []) {
   const db = getDb();
+  if (usingNativeNodeSqlite) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(sql);
+        const row = stmt.get(...params);
+        resolve(row ? { ...row } : undefined);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
   return new Promise((resolve, reject) => {
     db.get(sql, params, (err, row) => {
       if (err) return reject(err);
@@ -37,6 +77,17 @@ function get(sql, params = []) {
 
 function all(sql, params = []) {
   const db = getDb();
+  if (usingNativeNodeSqlite) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(sql);
+        const rows = stmt.all(...params);
+        resolve(rows.map((r) => ({ ...r })));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
   return new Promise((resolve, reject) => {
     db.all(sql, params, (err, rows) => {
       if (err) return reject(err);
@@ -46,7 +97,7 @@ function all(sql, params = []) {
 }
 
 async function initDb() {
-  const db = getDb();
+  getDb();
   await run(`
     CREATE TABLE IF NOT EXISTS fornecedores (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -89,6 +140,15 @@ async function initDb() {
 function closeDb() {
   return new Promise((resolve, reject) => {
     if (!dbInstance) return resolve();
+    if (usingNativeNodeSqlite) {
+      try {
+        dbInstance.close();
+        dbInstance = null;
+        return resolve();
+      } catch (err) {
+        return reject(err);
+      }
+    }
     dbInstance.close((err) => {
       if (err) return reject(err);
       dbInstance = null;
