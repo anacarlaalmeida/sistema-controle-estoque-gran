@@ -120,7 +120,7 @@ O banco de dados SQLite inicializa automaticamente três tabelas ao subir a apli
    http://localhost:3000/
    ```
 
-### Opção 2: Execução via Docker / Google Cloud Run
+### Opção 2: Execução via Docker / Cloud Run
 
 O backend inclui um `Dockerfile` configurado para execução em container (ouvindo em `0.0.0.0` na porta definida pela variável de ambiente `PORT`, padrão `8080` no container ou `3000` localmente) e compatibilidade automática entre o pacote `sqlite3` e o módulo nativo `node:sqlite` do Node.js 22+:
 
@@ -129,9 +129,6 @@ cd backend
 docker build -t sistema-controle-estoque-gran .
 docker run -p 3000:8080 sistema-controle-estoque-gran
 ```
-
-- **URL Pública em Produção (Google Cloud Run):**
-  `https://sistema-controle-estoque-gran-596069157987.us-central1.run.app`
 
 ---
 

@@ -7,19 +7,6 @@ Sistema completo de Controle de Estoque composto por **Backend (Node.js + Expres
 
 ---
 
-## Serviço REST Publicado na Nuvem (Google Cloud Run)
-
-A API REST do projeto está publicada e disponível publicamente no **Google Cloud Run** para testes diretos via **Insomnia** ou **Postman**:
-
-- **URL Base na Nuvem:** `https://sistema-controle-estoque-gran-596069157987.us-central1.run.app`
-- **Rotas principais:**
-  - `GET /` &rarr; Retorna `"Olá, Mundo!"`
-  - `GET /fornecedores` e `POST /fornecedores`
-  - `GET /produtos` e `POST /produtos`
-  - `GET /produtos/:produtoId/fornecedores`, `POST /produtos/:produtoId/fornecedores` e `DELETE /produtos/:produtoId/fornecedores/:fornecedorId`
-
----
-
 ## Estrutura do Repositório
 
 - [`./backend`](./backend): API RESTful em Node.js, Express e SQLite com CRUD completo e regras de negócio para **Fornecedores**, **Produtos** e **Associação Produto/Fornecedor (N:N)**, além de `Dockerfile`, coleção do Insomnia e testes automatizados.
@@ -60,24 +47,3 @@ npm install
 npm start
 ```
 A aplicação React estará disponível em `http://localhost:5173/`.
-
-### Opção 2: aplicação completa com Docker Compose
-
-Na raiz do projeto, execute:
-
-```bash
-docker compose up --build
-```
-
-A aplicação ficará disponível em `http://localhost:5173/` e a API em
-`http://localhost:3000/`. O Compose sobe o frontend e o backend, mantendo o
-banco SQLite e os uploads em volumes Docker.
-
-Para encerrar os serviços, pressione `Ctrl+C` e execute:
-
-```bash
-docker compose down
-```
-
-Esse comando preserva os volumes de dados. Para iniciar novamente sem
-reconstruir as imagens, use `docker compose up`.
